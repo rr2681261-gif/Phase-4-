@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html ng-app="tableApp">
+<head>
+  <title>AngularJS Table</title>
+</head>
+<body>
+  <div ng-controller="tableCtrl">
+    <h2>Student List</h2>
+    <input type="text" ng-model="searchText" placeholder="Search...">
+    <table border="1">
+      <tr>
+        <th>Name</th>
+        <th>Dept</th>
+      </tr>
+      <tr ng-repeat="student in students | filter:searchText">
+        <td>{{ student.name }}</td>
+        <td>{{ student.dept }}</td>
+      </tr>
+    </table>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <script>
+    var app = angular.module('tableApp', []);
+    app.controller('tableCtrl', function($scope) {
+      $scope.students = [
+        { name: 'Bharath', dept: 'CSE' },
+        { name: 'Arun', dept: 'IT' },
+        { name: 'Kavi', dept: 'AIDS' }
+      ];
+    });
+  </script>
+</body>
+</html>
