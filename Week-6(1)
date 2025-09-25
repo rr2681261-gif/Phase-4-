@@ -1,0 +1,25 @@
+doctype html>
+<html ng-app="myApp">
+<head>
+  <meta charset="utf-8">
+  <title>AngularJS Test</title>
+</head>
+<body>
+  <div ng-controller="myCtrl">
+    <p>Hello, {{ name }}!</p>
+    <input ng-model="name" placeholder="Enter your name">
+  </div>
+
+  <!-- 1) Angular library (must be before your app code) -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+
+  <!-- 2) App code inline to avoid path issues -->
+  <script>
+    console.log('angular loaded:', !!window.angular, window.angular && window.angular.version);
+    angular.module('myApp', [])
+      .controller('myCtrl', ['$scope', function($scope) {
+        $scope.name = 'Angular Student';
+      }]);
+  </script>
+</body>
+</html>
