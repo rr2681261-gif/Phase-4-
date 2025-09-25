@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html ng-app="formApp">
+<head>
+  <title>AngularJS Form</title>
+</head>
+<body>
+  <div ng-controller="formCtrl">
+    <form name="userForm" ng-submit="submitForm()">
+      <input type="text" ng-model="user.name" placeholder="Enter Name" required>
+      <span ng-show="userForm.$invalid">* Name required</span>
+      <br><br>
+      <button type="submit" ng-disabled="userForm.$invalid">Submit</button>
+    </form>
+    <p>Submitted Name: {{ submittedName }}</p>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <script>
+    var app = angular.module('formApp', []);
+    app.controller('formCtrl', function($scope) {
+      $scope.submitForm = function() {
+        $scope.submittedName = $scope.user.name;
+      };
+    });
+  </script>
+</body>
+</html>
