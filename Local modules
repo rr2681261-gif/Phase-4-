@@ -1,0 +1,21 @@
+const connectDB = require('./config/db'); // Database connection function
+const contactsRouter = require('./routes/contacts'); // Contacts route file
+const { errorHandler, notFound } = require('./middlewares/error'); // Custom error handlers
+const app = express();
+connectDB();
+app.use(helmet());         // Security
+app.use(cors());           // Enable CORS
+app.use(express.json());   // Parse JSON body
+app.use(morgan('dev'));    // Logging
+const limiter = rateLimit({
+  windowMs: (process.env.RATE_LIMIT_WINDOW_MINUTES ? Number(process.env.RATE_LIMIT_WINDOW_MINUTES) : 15) * 60 * 1000,
+  max: process.env.RATE_LIMIT_MAX ? Number(process.env.RATE_LIMIT_MAX) : 100,
+  message: { message: "Too many requests, please try again later." }
+});
+app.use(limiter);
+app.get('/', (req, res) => res.json({ message: 'Contact Management API is running' }));
+app.use('/api/contacts', contactsRouter);
+app.use(notFound);     // Handles 404 errors
+app.use(errorHandler); // Handles all other errors
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
