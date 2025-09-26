@@ -1,0 +1,22 @@
+const mongoose = require('mongoose');
+
+const connectDB = async () => {
+  const uri = process.env.MONGO_URI;
+  if (!uri) {
+    console.error('MONGO_URI not set in .env');
+    process.exit(1); // Exit process if no URI
+  }
+  try {
+    await mongoose.connect(uri, {
+      // In Mongoose v7+, no need to pass extra options
+    });
+    console.log('MongoDB connected');
+  } catch (err) {
+    console.error('MongoDB connection error:', err.message);
+    process.exit(1); // Exit process on failure
+  }
+};
+
+module.exports = connectDB;
+MONGO_URI=mongodb://localhost:27017/contactdb
+PORT=5000
