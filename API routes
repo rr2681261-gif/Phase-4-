@@ -1,0 +1,25 @@
+const express = require('express');
+const router = express.Router();
+const contactController = require('../controllers/contactController');
+
+// CRUD Routes
+
+// ➕ Create new contact
+router.post('/', contactController.createContact);
+
+// 📄 Get all contacts (with pagination & search)
+router.get('/', contactController.getContacts);
+
+// 🔍 Get single contact by ID
+router.get('/:id', contactController.getContactById);
+
+// ✏️ Update a contact
+router.put('/:id', contactController.updateContact);
+
+// 🗑️ Delete single contact
+router.delete('/:id', contactController.deleteContact);
+
+// 🗑️ Bulk delete contacts (optional)
+router.delete('/', contactController.deleteManyContacts);
+
+module.exports = router;
