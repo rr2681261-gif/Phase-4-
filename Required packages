@@ -1,0 +1,6 @@
+require('dotenv').config();       // Loads environment variables from .env
+const express = require('express'); 
+const helmet = require('helmet'); // Adds security headers
+const cors = require('cors');     // Allows cross-origin requests
+const morgan = require('morgan');// HTTP request logger
+const rateLimit = require('express-rate-limit'); // Rate limiting
