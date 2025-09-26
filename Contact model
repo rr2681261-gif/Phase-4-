@@ -1,0 +1,47 @@
+const mongoose = require('mongoose');
+
+const ContactSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+    index: true // fast searching by name
+  },
+  email: {
+    type: String,
+    required: false,
+    unique: false,  // can allow duplicate emails
+    lowercase: true,
+    trim: true,
+    index: true
+  },
+  phone: {
+    type: String,
+    required: true,
+    index: true // fast searching by phone
+  },
+  address: { type: String },
+  company: { type: String },
+  tags: [{ type: String }]
+}, {
+  timestamps: true  // auto add createdAt, updatedAt
+});
+
+// Compound text index for full-text search across multiple fields
+ContactSchema.index({
+  name: 'text',
+  email: 'text',
+  phone: 'text',
+  company: 'text',
+  address: 'text'
+});
+
+module.exports = mongoose.model('Contact', ContactSchema);
+{
+  "name": "Rahul Bunny",
+  "email": "rahul@example.com",
+  "phone": "9876543210",
+  "address": "Chennai",
+  "company": "IBM",
+  "tags": ["friend", "work"]
+}
+Contact.find({ $text: { $search: "IBM Chennai" } });
